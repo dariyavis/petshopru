@@ -2,14 +2,14 @@ Ext.onReady(function () {
     var store = Ext.create('Ext.data.JsonStore', {
         proxy: {
             type: 'ajax',
-            url: 'http://localhost:8080/listUsers',
+            url: '/listUsers',
             actionMethods: 'POST',
             reader:
                 {
                     type: 'json'
                 }
         },
-        fields: ['id', 'username', 'age']
+        fields: ['id', 'name', 'surname', 'age']
     });
     store.load();
     Ext.create('Ext.grid.Panel', {
@@ -22,8 +22,40 @@ Ext.onReady(function () {
         columns:
             [
                 {dataIndex: 'id', header: 'ID', hidden: true},
-                {dataIndex: 'username', header: 'Name', flex: 3},
+                {dataIndex: 'name', header: 'Name', flex: 1},
+                {dataIndex: 'surname', header: 'Surname', flex: 1},
                 {dataIndex: 'age', header: 'Age', width: 100},
+                {
+                    xtype:'actioncolumn',
+                    width:30,
+                    items: [{
+                        icon: '../resouses/delete_icon.png',
+                        tooltip: 'Delete',
+                        handler: function(grid, rowIndex, colIndex) {
+                            var rec = grid.getStore().getAt(rowIndex);
+                            // alert("Terminate " + rec.get('id'));
+                            Ext.Ajax.request({
+                                url: '/deleteUser',
+                                method: 'POST',
+                                params: {
+                                    "id" : rec.get('id')
+                                },
+                                // success: function(response, opts) {
+                                //     var obj = Ext.decode(response.responseText);
+                                //     console.dir(obj);
+                                // },
+                                //
+                                // failure: function(response, opts) {
+                                //     console.log('server-side failure with status code ' + response.status);
+                                // }
+                                success: function(response, opts) {
+                                    grid.store.remove(rec);
+                                }
+
+                            });
+                        }
+                    }]
+                }
             ],
         renderTo: 'users_panel',
         store: store

@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UserMapper {
-    User selectUserByName(String username);
+    User selectUserByName(String name);
     void insertUser(User user);
     void deleteUser(int id);
 //    User selectAllUsers();

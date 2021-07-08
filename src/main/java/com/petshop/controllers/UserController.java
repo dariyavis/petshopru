@@ -3,7 +3,6 @@ package com.petshop.controllers;
 import com.petshop.batis.entity.User;
 import com.petshop.batis.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,13 +28,18 @@ public class UserController {
     public void addUser() {
         User user = new User();
         user.setAge(25);
-        user.setUsername("«Сяо Мин»");
+        user.setName("«Сяо Мин»");
         userMapper.insertUser(user);
     }
 
     @RequestMapping("/listUsers")
     public List<User> getAllUsers(){
         return userMapper.getAllUsers();
+    }
+
+    @RequestMapping("/deleteUser")
+    public void deleteUser(int id) {
+        userMapper.deleteUser(id);
     }
 
 
