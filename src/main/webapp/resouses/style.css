@@ -1,0 +1,27 @@
+body{
+    /*background-color: #3366CC; !* Цвет фона веб-страницы *!*/
+    /*background-color: linear-gradient(to top, #585858, #dddddd);*/
+    height: auto;
+}
+
+.center {
+    background: lightslategray;
+    width:auto;
+    padding: 20px;
+    margin: 40px;
+    min-width: 200px;
+    min-height: 80vh;
+}
+
+.header {
+    text-align: center;
+    font-family: Comic Sans MS;
+    padding-bottom: 20px;
+}
+
+#users_panel {
+    border: 1px solid #ffffff;
+    text-align: center;
+    min-height: 200px;
+    /*margin: 20px 5px;*/
+}
