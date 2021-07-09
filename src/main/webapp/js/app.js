@@ -1,23 +1,30 @@
 Ext.onReady(function () {
-    var store = Ext.create('Ext.data.JsonStore', {
+
+    Ext.define('User', {
+        extend: 'Ext.data.Model',
+        serverSideId: false,
+        fields: [
+            {name: 'id', type: 'int'},
+            {name: 'name',  type: 'string'},
+            {name: 'surname', type: 'string'},
+            {name: 'age',  type: 'int'}
+        ],
         proxy: {
-            type: 'ajax',
-            url: '/listUsers',
-            autoLoad: true,
-            autoSync: true,
-            actionMethods: 'POST',
-            reader:
-                {
-                    type: 'json'
-                }
+            type: 'rest',
+            url: '/users'
         },
-        fields: ['id', 'name', 'surname', 'age']
+        resetId: function() {
+            this.set('id', null);
+        }
     });
-    store.load();
+
+    var store = Ext.create('Ext.data.Store', {
+        model: 'User',
+        autoLoad: true
+    });
+
     Ext.create('Ext.grid.Panel', {
         id: "gridUsers",
-        // width: 410,
-        // style: 'margin-top: 20px; margin-left: 40%',
         layout: {
             type: 'hbox',
             pack: 'center'
@@ -48,18 +55,9 @@ Ext.onReady(function () {
                         tooltip: 'Delete',
                         handler: function (grid, rowIndex, colIndex) {
                             var rec = grid.getStore().getAt(rowIndex);
-                            // alert("Terminate " + rec.get('id'));
-                            Ext.Ajax.request({
-                                url: '/deleteUser',
-                                method: 'POST',
-                                params: {
-                                    "id": rec.get('id')
-                                },
-                                success: function (response, opts) {
-                                    grid.store.remove(rec);
-                                }
-
-                            });
+                            var user = Ext.create(User, rec.getData());
+                            user.erase();
+                            grid.store.remove(rec);
                         }
                     }]
                 }
@@ -114,14 +112,11 @@ Ext.onReady(function () {
                         handler: function () {
                             var form = this.up('form').getForm();
                             if (form.isValid()) {
-                                form.submit({
-                                    url: '/addUser',
-                                    method: 'POST',
-                                    success: function (form, action) {
-                                        winForm.destroy();
-                                        Ext.ComponentQuery.query('grid[id=gridUsers]')[0].store.load()
-                                    }
-                                });
+                                var user = Ext.create(User, form.getValues());
+                                user.resetId();
+                                user.save();
+                                winForm.destroy();
+                                Ext.ComponentQuery.query('grid[id=gridUsers]')[0].store.load();
                             } else {
                                 Ext.Msg.alert("Error!", "Your form is invalid!");
                             }

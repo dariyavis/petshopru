@@ -3,8 +3,7 @@ package com.petshop.controllers;
 import com.petshop.batis.entity.User;
 import com.petshop.batis.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,42 +11,34 @@ import java.util.List;
 //@Controller
 public class UserController {
 
-    // Внедрение зависимости
     @Autowired
     private UserMapper userMapper;
 
-
-    @RequestMapping("/ws")
-    public User user(){
-        // Вызов слоя DAO
-        User user = userMapper.selectUserByName("avis");
-        return user;
-    }
-
-    @RequestMapping("/add")
-    public void addUser() {
-        User user = new User();
-        user.setAge(25);
-        user.setName("«Сяо Мин»");
-        userMapper.insertUser(user);
-    }
-
-    @RequestMapping("/listUsers")
-    public List<User> getAllUsers(){
+    @GetMapping("/users")
+    List<User> all() {
         return userMapper.getAllUsers();
     }
 
-    @RequestMapping("/deleteUser")
-    public void deleteUser(int id) {
-        userMapper.deleteUser(id);
-    }
-    @RequestMapping("/addUser")
-    public void addUser(String name, String surname, Integer age) {
-        User user = new User();
-        user.setName(name);
-        user.setSurname(surname);
-        user.setAge(age);
+    @PostMapping("/users")
+    void newUser(@RequestBody User user) {
         userMapper.insertUser(user);
+    }
+
+    // Single item
+
+    @GetMapping("/users/{id}")
+    void one(@PathVariable Integer id) {
+        userMapper.selectUserById(id);
+    }
+
+    @PutMapping("/users/{id}")
+    void updateUser(@RequestBody User user, @PathVariable Integer id) {
+        userMapper.updateUser(user);
+    }
+
+    @DeleteMapping("/users/{id}")
+    void deleteUser(@PathVariable Integer id) {
+        userMapper.deleteUser(id);
     }
 
 
