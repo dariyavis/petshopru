@@ -1,3 +1,3 @@
-INSERT INTO public.users (id, name, surname, age) VALUES ('1', 'Will', 'Smith', '52');
-INSERT INTO public.users (id, name, surname, age) VALUES(2, 'Johnny', 'Depp', 58);
-INSERT INTO public.users (id, name, surname, age) VALUES(3, 'Leonardo', 'DiCaprio', 46);
+INSERT INTO public.users (name, surname, age) VALUES ('Will', 'Smith', '52');
+INSERT INTO public.users (name, surname, age) VALUES('Johnny', 'Depp', 58);
+INSERT INTO public.users (name, surname, age) VALUES('Leonardo', 'DiCaprio', 46);

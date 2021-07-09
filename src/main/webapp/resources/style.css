@@ -1,0 +1,53 @@
+body{
+    height: auto;
+}
+
+.center {
+    background: lightslategray;
+    width:auto;
+    padding: 20px;
+    margin: 40px;
+    min-width: 200px;
+    min-height: 80vh;
+}
+
+.header_text {
+    text-align: center;
+    font-family: Georgia;
+    padding-bottom: 20px;
+}
+
+#add_button {
+    float: right;
+    display: block;
+}
+
+#add_button .x-btn-default-large {
+    padding: 0;
+    border-color: transparent;
+    background-color: transparent;
+}
+
+#users_panel {
+    text-align: center;
+    min-height: 200px;
+}
+
+
+.add_button_cls {
+    background-color: transparent !important;
+    background: url('plus.png') no-repeat;
+    background-size: contain !important;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+}
+.removeButtonCls :hover {
+    width: 26px;
+    height: 26px;
+    background-color: transparent !important;
+    background: url('plus.png') no-repeat;
+    background-size: contain !important;
+    border-style: none !important;
+    border-radius: 0px !important;
+}

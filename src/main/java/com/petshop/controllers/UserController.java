@@ -41,6 +41,14 @@ public class UserController {
     public void deleteUser(int id) {
         userMapper.deleteUser(id);
     }
+    @RequestMapping("/addUser")
+    public void addUser(String name, String surname, Integer age) {
+        User user = new User();
+        user.setName(name);
+        user.setSurname(surname);
+        user.setAge(age);
+        userMapper.insertUser(user);
+    }
 
 
 }
